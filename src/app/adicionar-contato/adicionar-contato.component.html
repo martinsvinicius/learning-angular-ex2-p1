@@ -1,0 +1,71 @@
+<form
+  id="form"
+  (submit)="
+    adicionar(
+      $event,
+      nome.value,
+      email.value,
+      telefone.value,
+      aniversario.value
+    )
+  "
+>
+  <div class="form-group">
+    <label for="nome">Nome do contato</label>
+    <input
+      name="nome"
+      class="form-control"
+      placeholder="Fulano da Silva"
+      required
+      #nome
+    />
+  </div>
+  <div class="form-group">
+    <label for="email">Email do contato</label>
+    <input
+      name="email"
+      type="email"
+      class="form-control"
+      placeholder="nome@blob.tech"
+      required
+      #email
+    />
+  </div>
+  <div class="form-group">
+    <label for="telefone">Telefone do contato</label>
+    <input
+      name="telefone"
+      class="form-control"
+      placeholder="(DDD) 99999-9999"
+      required
+      #telefone
+    />
+  </div>
+  <div class="form-group">
+    <label for="aniversario">Aniversário do contato</label>
+    <input
+      name="aniversario"
+      type="date"
+      class="form-control"
+      placeholder="DD/MM/AAAA"
+      required
+      #aniversario
+    />
+  </div>
+
+  <button type="submit" class="btn btn-primary">Adicionar!</button>
+</form>
+
+<hr />
+
+<h2 class="contatos-title mt-2">Contatos ({{ listaContatos.length }})</h2>
+<div class="cardWrapper">
+  <div class="card" style="width: 18rem" *ngFor="let contato of listaContatos">
+    <div class="card-body">
+      <h5 class="card-title">{{ contato.getNome() }}</h5>
+      <h6 class="card-subtitle mb-2 text-muted">{{ contato.getEmail() }}</h6>
+      <h6 class="mb-2 text-muted">{{ contato.getTelefone() }}</h6>
+      <h6 class="mb-2 text-muted">Nasceu em {{ contato.getAniversario() }}</h6>
+    </div>
+  </div>
+</div>
