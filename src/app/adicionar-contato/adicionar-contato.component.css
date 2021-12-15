@@ -11,3 +11,16 @@
   margin-top: 1rem;
   margin-bottom: 2rem;
 }
+
+.card {
+  transition: all 0.1s linear;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  background: #f1f1f1;
+}
+
+button[disabled] {
+  cursor: not-allowed;
+}

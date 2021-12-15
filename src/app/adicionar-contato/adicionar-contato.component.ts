@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Contato } from '../contato';
 
 @Component({
@@ -9,28 +10,39 @@ import { Contato } from '../contato';
 export class AdicionarContatoComponent implements OnInit {
   listaContatos: Contato[] = [];
 
+  form = new FormGroup({
+    nome: new FormControl(null, [Validators.required, Validators.minLength(3)]),
+    email: new FormControl(null, [Validators.required, Validators.email]),
+    telefone: new FormControl(null, [Validators.required]),
+    aniversario: new FormControl(null, [Validators.required]),
+  });
+
   constructor() {}
 
   ngOnInit(): void {}
 
-  adicionar(
-    event: Event,
-    nome: string,
-    email: string,
-    telefone: string,
-    aniversario: string
-  ): void {
-    event.preventDefault();
+  adicionar(e: Event): void {
+    e.preventDefault();
 
-    let aniversarioContato = this.formatarAniversario(aniversario);
+    if (!this.form.valid) {
+      alert('Preencha todos os campos corretamente!');
+      return;
+    }
 
-    const novoContato = new Contato(nome, email, telefone, aniversarioContato);
+    let aniversarioContato = this.formatarAniversario(
+      this.form.value.aniversario
+    );
 
-    this.listaContatos.push(novoContato);
+    const novoContato = new Contato(
+      this.form.value.nome,
+      this.form.value.email,
+      this.form.value.telefone,
+      aniversarioContato
+    );
 
-    const form = document.querySelector('#form') as HTMLFormElement;
+    this.listaContatos = [...this.listaContatos, novoContato];
 
-    form.reset();
+    this.form.reset();
   }
 
   formatarAniversario(aniversario: string): string {
